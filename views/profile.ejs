@@ -1,0 +1,116 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    
+            <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="button" id="Movies" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-tent" aria-hidden="true"></span>
+                        <div class="hidden-xs">Movies</div>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" id="Comments" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <div class="hidden-xs">Comments</div>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" id="Info" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <div class="hidden-xs">Info</div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="well">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tab1">
+                        <h3><%=user.username%>'s Movie Reviews:</h3>
+                        <!-- <div class="container" style="overflow:auto;"> -->
+                            <br>
+                            <div class="row" >
+                                    <% movies.forEach(function(movie){ %>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            <div class="thumbnail">
+                                            <img src="<%= movie.image %>">
+                                            <div class="caption">
+                                                <h4><%= movie.name %></h4>
+                                            </div>
+                                            <p>
+                                                <a href="/movies/<%= movie._id %>" class="btn btn-primary">More Info</a>
+                                            </p>
+                                            </div>
+                                        </div>
+                                    <% }); %>                  
+                            </div>
+                        <!-- </div> -->
+                    </div>
+            
+                    <div class="tab-pane fade in" id="tab2">
+                        <h3><%=user.username%>'s Ratings:</h3>
+                        <div class="list-group">
+                            <%var u = user.username;%>
+                            <%  function find_user_comments(com){  return com.author.username==u;  }    %>
+                            <%for(var i=0; i<allMovies.length; i++) {%>
+                                <% var user_comments = allMovies[i].comments.filter(find_user_comments); %>
+                                <%if(user_comments && user_comments.length>0){%>
+                                    <li class="list-group-item">
+                                        <h3><%=allMovies[i].name%>:</h3>
+                                        <%for(var j=0;j<user_comments.length;j++){%>
+                                            <%  var com = user_comments[j]; %>
+                                            <div class="row">
+                                                <!-- <div class="row">
+                                                    <div class="col-md-9">
+                                                        <h5><strong><%= com.rating_value %></strong>  <span style="color:black;">&#9733;</span>  <strong><%=com.title%></strong></h5>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <span class="pull-right"><%=com.date%></span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <pre><%= com.text %></pre>
+                                                    </div>
+                                                </div>
+                                                <!-- comment Buttons: -->
+                                                <%if(currentUser && com.author.id.equals(currentUser._id)){%>
+                                                <div class="row" style="margin-right:0;">
+                                                    <div class="pull-right">
+                                                        <form id="deleteform" action = "/movies/<%=allMovies[i]._id%>/comments/<%=com._id%>?_method=DELETE" method="POST">
+                                                        <button class = "btn btn-xs btn-danger"  >Delete</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a class = "btn btn-xs btn-warning" href="/movies/<%=allMovies[i]._id%>/comments/<%= com._id%>/edit" >Edit</a>
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                            </div>
+                                            <!--seperate the comments of same campground by a line-->
+                                            <%if(j<user_comments.length-1){%>
+                                                <hr class="style10">							
+                                            <% } %>
+                                        <% } %>
+                                    </li><br>
+                                <% } %>
+                            
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade in" id="tab3">
+                        <h3>Info:</h3>
+                        <label>Username:  <%=user.username%></label><br>
+                        <label>email:  <%=user.email%></label><br>							  
+                    </div>
+                </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(".btn-pref .btn").click(function () {
+            $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+            $(this).removeClass("btn-default").addClass("btn-primary");   
+        });
+    });
+</script>
+<%- include("partials/footer") %>

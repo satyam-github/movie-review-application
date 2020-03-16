@@ -1,0 +1,71 @@
+
+.thumbnail {
+    height: 100%;
+}
+
+.thumbnail img {
+    height: 70%;
+    width: 100%;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.dropdown-menu>li>a{
+    display: block;
+    clear: both;
+    font-weight: 400;
+    padding: 10px!important;
+    line-height: 1.42857143;
+    color: black!important;
+    background:white!important;
+    white-space: nowrap;
+}
+
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover{
+    text-decoration: none;
+    color: white!important;
+    background: #283048!important; 
+}
+
+.navbar-login{
+    min-width: 250px;
+    padding: 10px;
+    padding-bottom: 0px;
+    color:black;
+    background:white;
+}
+
+.icon-size{
+    font-size: 83px;
+}
+
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+   }
+   
+   /* style icon */
+   .inner-addon .glyphicon {
+   position: absolute;
+   padding: 10px;
+   pointer-events: none;
+   }
+   
+   /* align icon */
+   .left-addon .glyphicon  { left:  0px;}
+   .right-addon .glyphicon { right: 0px;}
+   
+   /* add padding  */
+   .left-addon input  { padding-left:  30px; }
+   .right-addon input { padding-right: 30px; }
+
